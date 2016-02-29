@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:k="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions" contentType="text/html">
+	<html>
+<h:head>
+	<title>Валутни курсове на Банки и Обменни бюра</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:dataTable value="#{beanExchange.listInstitutions}" var="items">
+			<f:facet name="header">
+				<p:clock pattern="dd.MM.yyyy" />
+				<br />
+				<h:outputText value="Валутни курсове" />
+			</f:facet>
+			<p:column headerText="Банки/Обменни бюра" width="500"
+				sortBy="#{items.fullName}">
+				<p:link value="#{items.fullName}" href="#{items.urlStr}" />
+			</p:column>
+			<p:column headerText="USD Купува" sortBy="#{items.buy('USD')}">
+				<h:outputText value="#{items.buy('USD')}" />
+			</p:column>
+			<p:column headerText="USD Продава" sortBy="#{items.sell('USD')}">
+				<h:outputText value="#{items.sell('USD')}" />
+			</p:column>
+			<p:column headerText="EUR Купува" sortBy="#{items.buy('EUR')}">
+				<h:outputText value="#{items.buy('EUR')}" />
+			</p:column>
+			<p:column headerText="EUR Продава" sortBy="#{items.sell('EUR')}">
+				<h:outputText value="#{items.sell('EUR')}" />
+			</p:column>
+			<p:column headerText="CHF Купува" sortBy="#{items.buy('CHF')}">
+				<h:outputText value="#{items.buy('CHF')}" />
+			</p:column>
+			<p:column headerText="CHF Продава" sortBy="#{items.sell('CHF')}">
+				<h:outputText value="#{items.sell('CHF')}" />
+			</p:column>
+			<p:column headerText="GBP Купува" sortBy="#{items.buy('GBP')}">
+				<h:outputText value="#{items.buy('GBP')}" />
+			</p:column>
+			<p:column headerText="GBP Продава" sortBy="#{items.sell('GBP')}">
+				<h:outputText value="#{items.sell('GBP')}" />
+			</p:column>
+		</p:dataTable>
+		<p:dataTable value="#{beanExchange.fixingBNB}" var="fixing">
+			<f:facet name="header">
+				<h:outputText value="Фиксинг на БНБ" />
+			</f:facet>
+			<p:column width="500">
+				<h:outputText value="БНБ" />
+			</p:column>
+			<p:column headerText="USD" colspan="2">
+				<h:outputText value="#{fixing.reference('USD')}" />
+			</p:column>
+			<p:column headerText="EUR" colspan="2">
+				<h:outputText value="#{fixing.reference('EUR')}" />
+			</p:column>
+			<p:column headerText="CHF" colspan="2">
+				<h:outputText value="#{fixing.reference('CHF')}" />
+			</p:column>
+			<p:column headerText="GBP" colspan="2">
+				<h:outputText value="#{fixing.reference('GBP')}" />
+			</p:column>
+		</p:dataTable>
+		<p:button value="Презареждане" onclick="#{beanExchange.refresh()}" />
+	</h:form>
+</h:body>
+	</html>
+</f:view>
